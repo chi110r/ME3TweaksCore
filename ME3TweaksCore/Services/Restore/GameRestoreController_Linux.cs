@@ -97,7 +97,7 @@ namespace ME3TweaksCore.Services.Restore
             if [ -x "/run/host/usr/bin/rsync" ]; then
                 RSYNC_PATH="/run/host/usr/bin/rsync"
 
-                # Flatpak host libraries may not be available to the process by default.
+                # Steam Runtime doesn't ship all required libraries.
                 LIBPOPT="$(find /run/host/usr -name libpopt.so.0 -print -quit 2>/dev/null)"
                 if [ -n "$LIBPOPT" ]; then
                     export LD_PRELOAD="$LIBPOPT"
@@ -113,7 +113,7 @@ namespace ME3TweaksCore.Services.Restore
                 RSYNC_PATH="/bin/rsync"
 
             else
-                echo "ERROR: rsync executable not found" >> "$LOG_FILE"
+                echo "ERROR: rsync executable not found (exit code 127)" >> "$LOG_FILE"
                 exit 127
             fi
 
